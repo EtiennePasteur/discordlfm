@@ -1,3 +1,0 @@
-@echo off
-discordlfm -t "DISCORD TOKEN" -l "LASTFM API KEY" -u "USERNAME"
-pause

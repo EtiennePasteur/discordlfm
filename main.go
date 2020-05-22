@@ -34,7 +34,7 @@ func init() {
 	flag.StringVar(&flagDiscordToken, "t", "", "Discord token")
 	flag.StringVar(&flagLFMAPIKey, "l", "", "Last.fm api key")
 	flag.StringVar(&flagLFMUsername, "u", "", "Last.fm username")
-	flag.StringVar(&flagNoSong, "g", "Silence", "Game to set to if there hasn't been a new song for a while")
+	flag.StringVar(&flagNoSong, "g", "", "Game to set to if there hasn't been a new song for a while")
 	flag.IntVar(&flagNoSongDuration, "n", 60*10, "Number of seconds without a new song for it to be considered nothing.")
 	flag.Parse()
 }
@@ -101,18 +101,22 @@ func run(s *discordgo.Session, lfm *lastfm.Api) {
 
 			if !setFallback && time.Since(lastPlayingTime).Seconds() > float64(flagNoSongDuration) {
 
-				err = s.UpdateStatus(0, flagNoSong)
+				err = s.UpdateListeningStatus(flagNoSong)
 				if err != nil {
 					log.Println("Error updating status:", err)
 				} else {
-					log.Println("Updated status to:", flagNoSong)
+					if flagNoSong == "" {
+						log.Println("Cleared playing status")
+					} else {
+						log.Println("Updated status to:", flagNoSong)
+					}
 					setFallback = true
 				}
 
 			}
 		} else {
 
-			err = s.UpdateStatus(0, playing)
+			err = s.UpdateListeningStatus(playing)
 			if err != nil {
 				log.Println("Error updating status:", err)
 			} else {
@@ -137,7 +141,7 @@ func check(lfm *lastfm.Api) (string, error) {
 
 	track := recent.Tracks[0]
 
-	return "♩" + track.Name + " by " + track.Artist.Name + "♩", nil
+	return track.Name + " by " + track.Artist.Name, nil
 }
 
 func fatal(args ...interface{}) {

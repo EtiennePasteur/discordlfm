@@ -1,6 +1,6 @@
 # Last FM -> Discord status scrobbling
 
-Sets your "game" to the last, or currently playing song played on your last.fm
+Sets your listening status to the last, or currently playing song played on your last.fm
 
 ### !Important!
 
@@ -8,11 +8,9 @@ Sets your "game" to the last, or currently playing song played on your last.fm
  - You will not be able to see the status yourself in the client, you should log into a second account or ask a friend to confirm wether it's working or not.
  - You should probably turn off "Display currently running game as status message" in the client when using this, otherwise it will override this when you launch a game or something.
 
-### To download pre-compiled executables see [releases](https://github.com/jonas747/discordlfm/releases)
-
 ### To compile it yourself:
  1. Install and set up go
- 2. Run `go get -u github.com/jonas747/discordlfm`
+ 2. Run `go get -u github.com/EtiennePasteur/discordlfm`
  3. It should now be built in `$GOPATH/bin` unless it threw errors
 
 Usage:
@@ -29,6 +27,4 @@ Usage:
         Last.fm username
 ```
 
-Example: `./discordlfm -t "my secret discord token" -l "my secret last.fm api key" -u "jonasr747"`
-
-Guide on retrieving the lfm api key and discord token: https://github.com/jonas747/discordlfm/issues/2#issuecomment-278950579
+Example: `./discordlfm -t "my secret discord token" -l "my secret last.fm api key" -u "EtiennePasteur"`
